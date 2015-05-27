@@ -1,18 +1,24 @@
 #!/bin/sh
 
-for f in .*
+for f in .??*
 do
-    if [ "$f" = "." -o "$f" = ".." -o "$f" = ".git" ];
+    if [ "$f" = ".git" ]
     then
         continue
     fi
 
-    if [ -e "${HOME}/$f" ];
-    then
-        echo "Backing up ${HOME}/$f to ${HOME}/${f}.bak"
-        mv "${HOME}/$f" "${HOME}/${f}.bak"
-    fi
-
     ln -s "$(pwd)/$f" "${HOME}/$f"
-    unset f
+
+    if [ $? -ne 0 ]
+    then
+        echo -n "Retry with --force ? [Y/n] "
+        read r
+        case $r in
+            [nN][oO]|[nN])
+                ;;
+            *)
+                ln -fs "$(pwd)/$f" "${HOME}/$f"
+                ;;
+        esac
+    fi
 done
