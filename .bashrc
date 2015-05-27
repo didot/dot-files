@@ -30,13 +30,15 @@ shopt -s checkwinsize
 # set a fancy prompt
 # PS1='[\u@\h \W]\$ '
 shopt -q login_shell && PS1='$(tput bold)$(tput setaf 1)\h$(tput sgr0) ' || PS1=
-PS1+='$(tput setaf 2)$(tput bold)\u$(tput sgr0)$(tput setaf 3):$(tput setaf 4)\w$(tput sgr0) \$ '
+PS1="${PS1}"'$(tput setaf 2)$(tput bold)\u$(tput sgr0)$(tput setaf 3):$(tput setaf 4)\w$(tput sgr0) \$ '
 
 # enable color support of ls and also add handy aliases
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+if [[ $(uname -s) == Linux ]]; then
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
 
 # some more ls aliases
 alias sl='ls'
