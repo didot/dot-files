@@ -6,7 +6,14 @@
 [[ $- != *i* ]] && return
 
 # set a color-supporting term type on Solaris
-[[ $(uname -s) == SunOS ]] && TERM=xtermc
+if [[ $(uname -s) == SunOS ]];
+then
+  TERM=xtermc
+  if [ -d "/opt/bin/csw" ];
+  then
+    PATH="${PATH}:/opt/bin/csw"
+  fi
+fi
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -25,7 +32,7 @@ bind '"\e[B": history-search-forward'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+# shopt -s checkwinsize
 
 # set a fancy prompt
 # PS1='[\u@\h \W]\$ '
@@ -47,9 +54,9 @@ alias ll='ls -l'
 alias la='ll -a'
 
 # safety features
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
+alias rm='rm -I'
+alias mv='mv -I'
+alias cp='cp -I'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
