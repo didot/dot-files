@@ -32,12 +32,20 @@ bind '"\e[B": history-search-forward'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
-# shopt -s checkwinsize
+shopt -s checkwinsize
 
 # set a fancy prompt
+# We need \[\] surround the non printing characters to avoid messing up bash estimation of PS1 size
 # PS1='[\u@\h \W]\$ '
-shopt -q login_shell && PS1='$(tput bold)$(tput setaf 1)\h$(tput sgr0) ' || PS1=
-PS1="${PS1}"'$(tput setaf 2)$(tput bold)\u$(tput sgr0)$(tput setaf 3):$(tput setaf 4)\w$(tput sgr0) \$ '
+PS1=
+# Add hostname if on a login shell
+shopt -q login_shell && PS1='\[$(tput bold)\]\[$(tput setaf 1)\]\h\[$(tput sgr0)\] '
+# Add username
+PS1="${PS1}"'\[$(tput setaf 2)\]\[$(tput bold)\]\u\[$(tput sgr0)\]'
+# Add working directory
+PS1="${PS1}"'\[$(tput setaf 3)\]:\[$(tput setaf 4)\]\w\[$(tput sgr0)\]'
+# Add $ or # symbol
+PS1="${PS1}"' \$ '
 
 # enable color support of ls and also add handy aliases
 if [[ $(uname -s) == Linux ]]; then
