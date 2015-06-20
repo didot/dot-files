@@ -8,11 +8,16 @@
 # set a color-supporting term type on Solaris
 if [[ $(uname -s) == SunOS ]];
 then
-  TERM=xtermc
-  if [ -d "/opt/bin/csw" ];
+  TERM=xterm
+  if [ -d "/opt/csw/bin" ];
   then
-    PATH="${PATH}:/opt/bin/csw"
+    PATH="/opt/csw/bin:${PATH}"
+
+    # terminfo definitions are quite complete from what i've seen in our Solaris + OpenCSW setups
+    TERM=xterm-256color
   fi
+
+  w
 fi
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -61,9 +66,9 @@ alias ll='ls -l'
 alias la='ll -a'
 
 # safety features
-alias rm='rm -I'
-alias mv='mv -I'
-alias cp='cp -I'
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -72,3 +77,8 @@ alias cp='cp -I'
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
+
+if [ -d ~/bin ]; then
+  PATH="$PATH:~/bin"
+fi
+
