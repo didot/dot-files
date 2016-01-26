@@ -1,3 +1,8 @@
+# Check for rbenv
+if type rbenv &>/dev/null; then
+  alias rbenv-init='eval "$(rbenv init -)"'
+fi
+
 # "repeat" command. Like:
 #
 #   repeat 10 echo foo
