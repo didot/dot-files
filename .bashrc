@@ -96,6 +96,7 @@ __setup_history() {
   bind '"\e[B": history-search-forward'
 }
 
+# Setup well-known aliases, and source .bash_aliases and .bash_aliases.d/* if they exist
 __setup_aliases() {
   # enable color support of ls and also add handy aliases
   if ls --version &>/dev/null; then
@@ -115,12 +116,15 @@ __setup_aliases() {
   alias ll='ls -l'
   alias la='ll --all'
 
-  # Alias definitions.
-  # You may want to put all your additions into a separate file like
-  # ~/.bash_aliases, instead of adding them here directly.
   if [[ -f ~/.bash_aliases ]]; then
     . ~/.bash_aliases
   fi
+
+  for alias_file in ~/.bash_aliases.d/*; do
+    if [[ -f "$alias_file" ]]; then
+      . "$alias_file"
+    fi
+  done
 }
 
 __setup_curses() {
@@ -140,4 +144,3 @@ if shopt -q login_shell; then
   # Because it looks cool when logging in from an SSH session :-)
   w
 fi
-
